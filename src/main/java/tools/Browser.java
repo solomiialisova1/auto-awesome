@@ -9,7 +9,7 @@ public class Browser {
 
     public static WebDriver getInstance() {
         if (driver.get() == null) {
-            WebDriverManager.chromedriver().driverVersion("122.0.6261.94").setup();
+            WebDriverManager.chromedriver().setup();
             driver.set(new ChromeDriver());
         }
         return driver.get();
