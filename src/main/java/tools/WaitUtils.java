@@ -1,16 +1,17 @@
 package tools;
 
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.FluentWait;
 
+import java.time.Duration;
 import java.util.List;
 
 public class WaitUtils {
-    private WebDriverWait wait;
+    private FluentWait<WebDriver> wait;
 
     public WaitUtils(int timeoutInSeconds) {
-        this.wait = new WebDriverWait(Browser.getInstance(), timeoutInSeconds);
+        this.wait = getWebDriverWait(timeoutInSeconds);
     }
 
     public WebElement waitForElementToBeVisible(WebElement webElement) {
@@ -23,5 +24,12 @@ public class WaitUtils {
 
     public List<WebElement> waitForElementsToBeVisible(List<WebElement> list) {
         return wait.until(ExpectedConditions.visibilityOfAllElements(list));
+    }
+
+    public static FluentWait<WebDriver> getWebDriverWait(int timeInSeconds) {
+        return new FluentWait<>(Browser.getInstance()).withTimeout(Duration.ofSeconds(timeInSeconds))
+                .ignoring(NoSuchElementException.class)
+                .ignoring(StaleElementReferenceException.class)
+                .ignoring(ElementNotInteractableException.class);
     }
 }
