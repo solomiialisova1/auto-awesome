@@ -11,7 +11,7 @@ public class NavigationBarTest extends BaseTest {
     private HomePage homePage;
 
     @BeforeMethod
-    public void beforeClass() {
+    public void beforeMethod() {
         homePage = openHomePage();
     }
 
